@@ -1,0 +1,131 @@
+paths:
+  /v1/api/user:
+    get:
+      summary: Obtiene todos los usuarios
+      tags: 
+        - Users
+      responses:
+        "200":
+          description: Los usuarios fueron obtenidos sactidactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#components/schemas/user'
+        "500":
+          description: Error interno del servidor
+    put:
+      summary: Obtiene todos los usuarios
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: query
+          required: true
+          description: Id del usuario que se desea actualizar
+          schema:
+            $type: string
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  $ref: '#components/requestBodies/updateUser'
+          responses:
+            "200":
+              description: User update
+            "500":
+              description: Error interno
+  /v1/api/user/{uid}:
+    get:
+      summary: Obtiene un solo usuario a partir de su Id
+      tags: 
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: Id del usuario que se desea solicitar
+        schema:
+          $tyupe: String
+        responses:
+          "200":
+            description: Usuario encontrado
+            content:
+              application/json:
+                schema:
+                  $ref: '#components/shemas/user'
+
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de mongo
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Correo del usuario
+        age:
+          type: number
+          description: Edad del usuario
+        rol:
+          type: string
+          description: Rol del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+        carts:
+          type: array
+          description: Historial de carritos del usuario
+      example:
+        _id: ObjectID()
+        first_name: rodrigo
+        last_name: accorinti
+        email: rodrigo@outlook.com
+        age: 40
+        rol: user
+        password: rodrigo123
+        carts: []
+  requestBodies:
+    updateUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Correo del usuario
+        age:
+          type: number
+          description: Edad del usuario
+        rol:
+          type: string
+          description: Rol del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+        carts:
+          type: array
+          description: Historial de carritos del usuario
+      example:
+        _id: ObjectID()
+        first_name: rodrigoUpdate
+        last_name: accorintiUpdate
+        email: rodrigo@outlook.com
+        age: 40
+        rol: user
+        password: rodrigo123
+        carts: []
